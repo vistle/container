@@ -206,6 +206,8 @@ RUN ${CCACHE} ccache -M 20G -s
 
 
 # build OpenCOVER
+RUN ${APTCACHE} apt-get install -y --no-install-recommends \
+        curl ca-certificates
 RUN git clone --recursive https://github.com/hlrs-vis/covise.git
 RUN \
        export COVISEDIR=${BUILDDIR}/covise \
