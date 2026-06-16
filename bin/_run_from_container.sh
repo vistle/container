@@ -27,6 +27,12 @@ case "$cmd" in
         args="-fg -localhost no :$idx"
         ports="$ports -p $p:$p"
         ;;
+    xpra)
+        cmd="xpra"
+        p=9876
+        args="start --bind-tcp=0.0.0.0:$p --html=on --daemon=no --start=xfce4-session"
+        ports="$ports -p $p:$p"
+        ;;
     *)
         ;;
 esac
@@ -77,7 +83,7 @@ case "$runner" in
             --interactive --tty \
             $ep $cmd \
             ${runnerargs} \
-            $image $args "$@"
+            docker.io/$image $args "$@"
         ;;
     apptainer)
         sif=vistle-${ARCH}.sif

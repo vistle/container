@@ -146,7 +146,7 @@ fi
 if [ -n "$XPRA" ]; then
 cat <<EOF_xpra
     RUN ${APTCACHE} apt-get install -y --no-install-recommends \
-        curl
+        curl ca-certificates
     RUN ${APTCACHE} curl https://xpra.org/get-xpra.sh | sed -e 's/sudo //' | bash
 EOF_xpra
 fi

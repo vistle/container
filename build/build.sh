@@ -11,7 +11,7 @@ export USE_MPI=TRUE # also used as CMake arg
 export XFCE=1
 
 export VNC=1
-export XPRA=
+export XPRA=1
 export VGL=1
 export NVIDIA=1
 
