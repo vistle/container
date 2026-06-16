@@ -60,11 +60,16 @@ case $ARCH in
     ;;
 esac
 
+function run() {
+    echo "$@"
+    "$@"
+}
+
 image="aumuell/vistle-${ARCH}:latest"
 eval runnerargs=\"\${${runner}args}\"
 case "$runner" in
     docker|podman|container)
-        $runner run \
+        run $runner run \
             $devices \
             $volumes \
             $ports \
@@ -76,9 +81,9 @@ case "$runner" in
         ;;
     apptainer)
         sif=vistle-${ARCH}.sif
-        apptainer pull $sif docker://$image
+        run apptainer pull $sif docker://$image
         #--no-home
-        apptainer run --home /home/ma/git/vistle-docker/home --fakeroot --nv --containall \
+        run apptainer run --home /home/ma/git/vistle-docker/home --fakeroot --nv --containall \
             ${runnerargs} \
             $sif $cmd $args "$@"
         ;;
