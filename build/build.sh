@@ -25,12 +25,19 @@ export BROWSER=firefox-esr
 #
 
 PUSH=
-case "$1" in
-    -p|--push)
-        PUSH=1
-        shift
-        ;;
-esac
+cache=
+while [ -n "$1" ]; do
+    case "$1" in
+        -p|--push)
+            PUSH=1
+            shift
+            ;;
+        -f|--force)
+            cache="--no-cache"
+            shift
+            ;;
+    esac
+done
 
 bash $(dirname $0)/make-dockerfile.sh > Dockerfile
 
@@ -50,7 +57,7 @@ esac
 PLAT=linux/$ARCH
 TAG=$ORG/${REPO}-$ARCH:latest
 
-docker buildx build --progress=plain --tag $TAG . || exit 1
+docker buildx build $cache --progress=plain --tag $TAG . || exit 1
 
 if [ -n "$PUSH" ]; then
     docker push $TAG
