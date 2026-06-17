@@ -8,3 +8,5 @@ Run `build/build.sh`, change included features by providing non-empty values for
 ## Running
 Start `bin/vnc` and connect to `vnc://localhost:5900` with a VNC viewer.
 Docker, Apptainer, Podman, and Orbstack have been used for execution.
+
+The directory `data` from this directory is visible inside the container as `/data`.
