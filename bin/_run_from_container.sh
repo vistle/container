@@ -22,10 +22,12 @@ case "$cmd" in
     vnc|vnc*)
         idx=${cmd#vnc}
         if [ -z "$idx" ]; then idx=0; fi
-        p=$((5900+$idx))
+        contp=$((5900+$idx))
+        baseport=${BASEPORT:=5900}
+        extp=$((${baseport}+$idx))
         cmd="vncserver"
         args="-fg -localhost no :$idx"
-        ports="$ports -p $p:$p"
+        ports="$ports -p $extp:$contp"
         ;;
     xpra)
         cmd="xpra"
