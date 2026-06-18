@@ -1,18 +1,17 @@
 # Docker image for Vistle
 
-The image built from this repository is based on Debian 13/Trixie, but Ubuntu 26.04 should also mostly work as base.
+This image provides a containerized environment for running Vistle, a tool for visualizing scientific data.
+It includes a pre-configured desktop environment and all necessary dependencies, so you can start using Vistle by connecting to the container with a VNC viewer.
 
 For the following steps, you should clone this repository inside a Linux/Unix environment.
 On Linux and macOS you can do this immediately, but on Windows you should first follow the steps below in order to get into WSL.
 
-## Building
-In order to build the container image, run `build/build.sh`.
-Building always requires `docker`.
-You can change the included features by providing non-empty values for some environment variables: 
-just edit them at the top of `build/build.sh`.
+## Executing
+This repository includes scripts for using the software in the container.
+From the root of the checkout of this repository, you will find them in the directory `bin`.
+You will need to execute them from a Linux/Unix environment, so on Windows you should first follow the steps below in order to get into WSL.
 
-## Running
-Go to the root of the checkout of this repository.
+The most important way to work with the container is to  start a  desktop environment inside the container and connect to it with a VNC viewer.
 
 Start `bin/vnc` and connect to `vnc://localhost:5900` with a VNC viewer.
 The required password is `secret`. After pulling an image from `docker.io`,
@@ -25,10 +24,29 @@ If the wrong mechanism is auto-detected, you can override it by setting `RUNNER`
 Especially if you built the image locally using `docker`, you might want to do so,
 in order to make sure that you use the locally built image.
 
+
+## Working with the container
+
+Connecting your VNC viewer to the container will bring up a Xfce desktop environment.
+Open a terminal emulator and type `vistle` to start the software.
+It is installed to `/usr/local`, and you can find some example workflows in `/usr/local/share/vistle/example`.
+
+You can also start it from the *Applications* menu from the *Science* category.
+
+The included Firefox browser can be used to access the documentation on [vistle.io](https://vistle.io) and is set up to open `vistle://` links in the documentation with the installed Vistle software.
+
 The directory `data` from this directory is visible inside the container as `/data`.
 You can use this to save your changes and exchange data.
 
-### Docker on Windows
+
+## Prepare your system for using the container
+
+The prequisites for using the container are:
+- the ability to run Linux containers on your system, e.g., by using Docker, Podman, or Orbstack
+- a VNC viewer for connecting to the container, e.g., TigerVNC or the built-in VNC viewer on macOS
+Please follow the section for your operating system, if your system does not yet provide the required components.
+
+### Windows - WSL, Docker Desktop and TigerVNC
 
 To use the container on Windows, please follow the following steps:
 1. Start *Windows Powershell* as administrator (by searching for *Windows Powershell* in the search bar, right-clicking on it and then selecting “Run as administrator”).
@@ -49,7 +67,7 @@ To use the container on Windows, please follow the following steps:
 You're now all set to use Vistle!
 
 
-### Docker on Linux
+### Linux - Docker and TigerVNC
 
 On Debian/Ubuntu do the following, to install the Docker runtime and CLI:
 ```sh
@@ -64,7 +82,7 @@ After starting the container with `bin/vnc`, you can connect to it by running
 vncviewer localhost:5900
 ```
 
-### Docker on macOS
+### macOS - Docker Desktop
 
 We assume that you use [Homebrew](brew.sh) to install the required components and that this is already set up on your computer.
 
@@ -78,3 +96,12 @@ This should install a _Docker runtime_ and the _Docker CLI_ as `docker`.
 This should be sufficient to run the included scripts.
 You can use the VNC client included in macOS to connect to the container:
 after spinning up the container with `bin/vnc`, open the Finder, select "Go" -> "Connect to Server..." and enter `vnc://localhost:5900` as the server address.
+
+
+## Building the image
+The docker image built from this repository is based on Debian 13/Trixie, but Ubuntu 26.04 should also mostly work as base.
+
+In order to build the container image, run `build/build.sh`.
+Building  with this script always requires `docker`.
+You can change the included features by providing non-empty values for some environment variables: 
+just edit them at the top of `build/build.sh`.
