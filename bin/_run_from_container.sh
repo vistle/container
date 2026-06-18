@@ -42,13 +42,16 @@ esac
 runner="docker"
 case "$(uname)" in
     Darwin)
-        container --version >/dev/null && runner=container
+        #container --version >/dev/null 2>&1 && runner=container
         containerargs="-m 10G"
         ;;
     Linux)
-        podman --version >/dev/null && runner=podman
+        podman --version >/dev/null 2>&1 && runner=podman
 
-        devices="--device=/dev/dri:/dev/dri"
+        devices=""
+        if [ -d "/dev/dri" ]; then
+            devices="$devices --device=/dev/dri:/dev/dri"
+        fi
         for d in /dev/nvidia*; do
             if [ ! -e "$d" ]; then continue; fi
             devices="$devices --device=$d:$d"
