@@ -1,28 +1,28 @@
 # Docker image for Vistle
 
 This image provides a containerized environment for running Vistle, a tool for visualizing scientific data.
-It includes a pre-configured desktop environment and all necessary dependencies, so you can start using Vistle by connecting to the container with a VNC viewer.
+It includes a pre-configured desktop environment and all necessary dependencies.
 
-For the following steps, you should clone this repository inside a Linux/Unix environment.
-On Linux and macOS you can do this immediately, but on Windows you should first follow the steps below in order to get into WSL.
+
+## TL;DR
+- Clone this repository from a Linux/Unix environment (WSL on Windows)
+- Start docker container with `bin/vnc`
+- Connect to `vnc://localhost:5900` with a VNC viewer (password: `secret`)
+- Start Vistle by entering `vistle` into the terminal emulator in the container
+
+
 
 ## Executing
 This repository includes scripts for using the software in the container.
 From the root of the checkout of this repository, you will find them in the directory `bin`.
-You will need to execute them from a Linux/Unix environment, so on Windows you should first follow the steps below in order to get into WSL.
+You will need to execute them from a Linux/Unix environment. On Windows you should get into WSL for doing so.
 
-The most important way to work with the container is to  start a  desktop environment inside the container and connect to it with a VNC viewer.
-
-Start `bin/vnc` and connect to `vnc://localhost:5900` with a VNC viewer.
-The required password is `secret`. After pulling an image from `docker.io`,
-this will launch an Xfce desktop. Vistle is installed to `/usr/local`,
-and you can start it by entering `vistle` into the terminal emulator.
-Some example workflows can be found in `/usr/local/share/vistle/example`.
-
-Docker, Apptainer, Podman, and Orbstack have been used for execution.
+The scripts will try to auto-detect the container runtime available on your system and use it to start the container.
 If the wrong mechanism is auto-detected, you can override it by setting `RUNNER`.
 Especially if you built the image locally using `docker`, you might want to do so,
 in order to make sure that you use the locally built image.
+
+Edit the script `bin/_run_from_container.sh` to customize the command that is executed inside the container.
 
 
 ## Working with the container
@@ -48,7 +48,7 @@ Please follow the section for your operating system, if your system does not yet
 
 ### Windows - WSL, Docker Desktop and TigerVNC
 
-To use the container on Windows, please follow the following steps:
+To use the container on Windows, please follow these steps:
 1. Start *Windows Powershell* as administrator (by searching for *Windows Powershell* in the search bar, right-clicking on it and then selecting “Run as administrator”).
 2.	Inside the shell, install *WSL* by typing the following command: `wsl -–install` and then hitting the Enter button.
 3.	Install *docker* with the command: `winget install Docker.DockerDesktop` (if the package cannot be found, search for the correct name for your system with `winget search docker`).
@@ -62,7 +62,6 @@ To use the container on Windows, please follow the following steps:
 11. Run the following command to start the VNC session: `sudo ./bin/vnc`
 12.	Now, still on your local machine, start the *TigerVNC* application. As VNC server, enter the following into the window that just appeared: `localhost:5900`
 13. Cick on “Connect” and enter the password `secret`.
-14.	Inside the window that just opened, open a terminal and type in the command `vistle`. 
 
 You're now all set to use Vistle!
 
@@ -81,6 +80,7 @@ After starting the container with `bin/vnc`, you can connect to it by running
 ```sh
 vncviewer localhost:5900
 ```
+and providing the password `secret` when prompted.
 
 ### macOS - Docker Desktop
 
@@ -96,6 +96,7 @@ This should install a _Docker runtime_ and the _Docker CLI_ as `docker`.
 This should be sufficient to run the included scripts.
 You can use the VNC client included in macOS to connect to the container:
 after spinning up the container with `bin/vnc`, open the Finder, select "Go" -> "Connect to Server..." and enter `vnc://localhost:5900` as the server address.
+Then click "Connect" and provide the password `secret` when prompted.
 
 
 ## Building the image
