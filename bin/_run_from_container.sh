@@ -42,7 +42,7 @@ esac
 runner="docker"
 case "$(uname)" in
     Darwin)
-        #container --version >/dev/null 2>&1 && runner=container
+        container --version >/dev/null 2>&1 && runner=container
         containerargs="-m 10G"
         ;;
     Linux)
