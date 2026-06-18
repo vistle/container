@@ -22,3 +22,11 @@ in order to make sure that you use the locally built image.
 
 The directory `data` from this directory is visible inside the container as `/data`.
 You can use this to save your changes and exchange data.
+
+### Docker on Windows
+
+
+### Docker on Linux
+
+
+### Docker on macOS
