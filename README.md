@@ -1,6 +1,9 @@
 # Docker image for Vistle
 
-This image is based on Debian 13/Trixie, but Ubuntu 26.04 should also mostly work as base.
+The image built from this repository is based on Debian 13/Trixie, but Ubuntu 26.04 should also mostly work as base.
+
+For the following steps, you should clone this repository inside a Linux/Unix environment.
+On Linux and macOS you can do this immediately, but on Windows you should first follow the steps below in order to get into WSL.
 
 ## Building
 In order to build the container image, run `build/build.sh`.
@@ -9,6 +12,8 @@ You can change the included features by providing non-empty values for some envi
 just edit them at the top of `build/build.sh`.
 
 ## Running
+Go to the root of the checkout of this repository.
+
 Start `bin/vnc` and connect to `vnc://localhost:5900` with a VNC viewer.
 The required password is `secret`. After pulling an image from `docker.io`,
 this will launch an Xfce desktop. Vistle is installed to `/usr/local`,
@@ -46,5 +51,30 @@ You're now all set to use Vistle!
 
 ### Docker on Linux
 
+On Debian/Ubuntu do the following, to install the Docker runtime and CLI:
+```sh
+apt install docker.io docker-cli
+```
+You also need a VNC viewer for connecting to the container, for example `tigervnc-viewer`:
+```sh
+apt install tigervnc-viewer
+```
+After starting the container with `bin/vnc`, you can connect to it by running
+```sh
+vncviewer localhost:5900
+```
 
 ### Docker on macOS
+
+We assume that you use [Homebrew](brew.sh) to install the required components and that this is already set up on your computer.
+
+Docker containers are based on Linux and thus require a virtual machine for execution.
+While there are many possibilities for doing so, we suggest to use [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/).
+You can do so by running
+```sh
+brew install docker-desktop
+```
+This should install a _Docker runtime_ and the _Docker CLI_ as `docker`.
+This should be sufficient to run the included scripts.
+You can use the VNC client included in macOS to connect to the container:
+after spinning up the container with `bin/vnc`, open the Finder, select "Go" -> "Connect to Server..." and enter `vnc://localhost:5900` as the server address.
