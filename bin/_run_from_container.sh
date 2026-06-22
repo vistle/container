@@ -40,6 +40,7 @@ case "$cmd" in
 esac
 
 runner="docker"
+dockerargs="--shm-size=4g"
 case "$(uname)" in
     Darwin)
         container --version >/dev/null 2>&1 && runner=container
